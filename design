@@ -1,0 +1,53 @@
+src/
+├── database/                    # Database core module
+│   ├── base/
+│   │   ├── base.entity.ts      # Base entity with common fields
+│   │   └── base.repository.ts  # Base repository with common operations
+│   ├── config/
+│   │   └── typeorm.config.ts   # TypeORM configuration
+│   └── database.module.ts      # Database module configuration
+├── modules/                    # Feature modules
+│   └── tasks/                 # Tasks module
+│       ├── entities/
+│       │   └── task.entity.ts
+│       ├── repositories/
+│       │   └── task.repository.ts
+│       ├── dto/
+│       │   ├── create-task.dto.ts
+│       │   ├── update-task.dto.ts
+│       │   └── task-response.dto.ts
+│       ├── interfaces/
+│       │   └── task.interface.ts
+│       ├── tasks.module.ts
+│       ├── tasks.service.ts
+│       └── tasks.controller.ts
+└── shared/                    # Shared resources
+    ├── constants/
+    │   └── database.constant.ts
+    └── types/
+        └── pagination.type.ts
+
+src/
+└── database/
+    ├── base/
+    │   ├── base.entity.ts           # Common entity fields
+    │   └── base.repository.ts       # Common repository methods
+    ├── config/
+    │   └── typeorm.config.ts        # TypeORM configuration
+    ├── decorators/
+    │   ├── transaction.decorator.ts  # Transaction decorator
+    │   └── inject-repository.decorator.ts
+    ├── interfaces/
+    │   ├── paginated-result.interface.ts
+    │   └── pagination-options.interface.ts
+    ├── migrations/
+    │   └── timestamp-create-tasks.ts
+    ├── seeds/
+    │   ├── seeder.ts
+    │   └── data/
+    │       └── initial-tasks.seed.ts
+    ├── providers/
+    │   └── database-transaction.provider.ts
+    ├── constants/
+    │   └── database.constant.ts
+    └── database.module.ts
