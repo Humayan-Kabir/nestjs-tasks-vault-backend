@@ -2,7 +2,7 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
-# NestJS Task Management API
+<h1 align="center">NestJS Task Management API</h1>
 
 ## Overview
 A robust RESTful API built with NestJS for task management, featuring comprehensive CRUD operations, data validation, and error handling. The system implements enterprise-level architecture patterns and best practices for scalable backend development.
@@ -15,6 +15,22 @@ A robust RESTful API built with NestJS for task management, featuring comprehens
 - 🔄 Entity-DTO mapping patterns
 - 🗃️ PostgreSQL integration
 - 🐳 Docker support for development
+
+## Project Structure
+```
+src/
+├── modules/
+│   └── tasks/
+│       ├── dto/          # Data Transfer Objects
+│       ├── entities/     # Database Entities
+│       ├── exceptions/   # Custom Exceptions
+│       ├── mappers/      # Object Mappers
+│       ├── tasks.controller.ts
+│       ├── tasks.service.ts
+│       └── tasks.module.ts
+├── config/              # Configuration
+└── common/             # Shared Resources
+```
 
 ## Technology Stack
 - **Framework**: NestJS
@@ -106,22 +122,6 @@ npm run start:dev
 # Production Build
 npm run build
 npm run start:prod
-```
-
-## Project Structure
-```
-src/
-├── modules/
-│   └── tasks/
-│       ├── dto/          # Data Transfer Objects
-│       ├── entities/     # Database Entities
-│       ├── exceptions/   # Custom Exceptions
-│       ├── mappers/      # Object Mappers
-│       ├── tasks.controller.ts
-│       ├── tasks.service.ts
-│       └── tasks.module.ts
-├── config/              # Configuration
-└── common/             # Shared Resources
 ```
 
 ## Environment Configuration
