@@ -2,98 +2,159 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# NestJS Task Management API
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Overview
+A robust RESTful API built with NestJS for task management, featuring comprehensive CRUD operations, data validation, and error handling. The system implements enterprise-level architecture patterns and best practices for scalable backend development.
 
-## Description
+## Key Features
+- ✨ Complete CRUD operations for tasks
+- 🔐 Input validation and sanitization
+- 🎯 Custom exception handling
+- 📝 Comprehensive API documentation
+- 🔄 Entity-DTO mapping patterns
+- 🗃️ PostgreSQL integration
+- 🐳 Docker support for development
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Technology Stack
+- **Framework**: NestJS
+- **Language**: TypeScript
+- **Database**: PostgreSQL
+- **ORM**: TypeORM
+- **Validation**: class-validator, class-transformer
+- **Documentation**: Swagger/OpenAPI
+- **Container**: Docker (optional, for PostgreSQL)
+- **Testing**: Jest
 
-## Project setup
+## Architecture
+The project follows a modular architecture with clear separation of concerns:
 
-```bash
-$ yarn install
+### Core Components
+- **Controllers**: Handle HTTP requests/responses
+- **Services**: Implement business logic
+- **Repositories**: Manage data persistence
+- **DTOs**: Define data transfer objects
+- **Entities**: Define database models
+- **Mappers**: Handle object transformations
+
+### Best Practices
+- Dependency Injection
+- Repository Pattern
+- DTO Pattern
+- Single Responsibility
+- Custom Exception Filters
+- Request Validation
+
+## API Endpoints
+
+### Tasks Resource
+```typescript
+GET    /api/tasks     - Retrieve all tasks
+GET    /api/tasks/:id - Retrieve a specific task
+POST   /api/tasks     - Create a new task
+PATCH  /api/tasks/:id - Update a task
+DELETE /api/tasks/:id - Delete a task
 ```
 
-## Compile and run the project
+### Request/Response Examples
 
-```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+#### Create Task
+```json
+POST /api/tasks
+{
+  "title": "Complete Project",
+  "description": "Finish the NestJS project implementation",
+  "status": "OPEN"
+}
 ```
 
-## Run tests
-
-```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+#### Task Response
+```json
+{
+  "id": 1,
+  "title": "Complete Project",
+  "description": "Finish the NestJS project implementation",
+  "status": "OPEN",
+  "createdAt": "2025-01-10T02:01:47+06:00",
+  "updatedAt": "2025-01-10T02:01:47+06:00"
+}
 ```
 
-## Deployment
+## Setup and Installation
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+### Prerequisites
+- Node.js (v16 or higher)
+- PostgreSQL (local install or Docker)
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
+### Database Setup
 ```bash
-$ yarn install -g mau
-$ mau deploy
+# Option 1: Using Docker for PostgreSQL
+docker-compose up -d postgres
+
+# Option 2: Use local PostgreSQL installation
+# Ensure PostgreSQL is running on port 5432
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Application Setup
+```bash
+# Install dependencies
+npm install
 
-## Resources
+# Development
+npm run start:dev
 
-Check out a few resources that may come in handy when working with NestJS:
+# Production Build
+npm run build
+npm run start:prod
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## Project Structure
+```
+src/
+├── modules/
+│   └── tasks/
+│       ├── dto/          # Data Transfer Objects
+│       ├── entities/     # Database Entities
+│       ├── exceptions/   # Custom Exceptions
+│       ├── mappers/      # Object Mappers
+│       ├── tasks.controller.ts
+│       ├── tasks.service.ts
+│       └── tasks.module.ts
+├── config/              # Configuration
+└── common/             # Shared Resources
+```
 
-## Support
+## Environment Configuration
+```env
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_NAME=tasks
+DATABASE_USER=postgres
+DATABASE_PASSWORD=postgres
+PORT=3000
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Testing
+```bash
+# Unit tests
+npm run test
 
-## Stay in touch
+# Integration tests
+npm run test:e2e
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+# Test coverage
+npm run test:cov
+```
+
+## API Documentation
+API documentation is available at `/api/docs` when running the application in development mode.
+
+## Contributing
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a new Pull Request
 
 ## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is licensed under the MIT License - see the LICENSE file for details.
