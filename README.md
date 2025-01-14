@@ -5,32 +5,18 @@
 <h1 align="center">NestJS Task Management API</h1>
 
 ## Overview
-A robust RESTful API built with NestJS for task management, featuring comprehensive CRUD operations, data validation, and error handling. The system implements enterprise-level architecture patterns and best practices for scalable backend development.
+A robust RESTful API built with NestJS for task management, featuring comprehensive CRUD operations, data validation, error handling, and task labeling system. The system implements enterprise-level architecture patterns and best practices for scalable backend development.
 
 ## Key Features
-- ✨ Complete CRUD operations for tasks
+- ✨ Complete CRUD operations for tasks and labels
+- 🏷️ Task labeling system with cascading operations
+- 📝 Pagination and filtering support
 - 🔐 Input validation and sanitization
 - 🎯 Custom exception handling
 - 📝 Comprehensive API documentation
 - 🔄 Entity-DTO mapping patterns
 - 🗃️ PostgreSQL integration
 - 🐳 Docker support for development
-
-## Project Structure
-```
-src/
-├── modules/
-│   └── tasks/
-│       ├── dto/          # Data Transfer Objects
-│       ├── entities/     # Database Entities
-│       ├── exceptions/   # Custom Exceptions
-│       ├── mappers/      # Object Mappers
-│       ├── tasks.controller.ts
-│       ├── tasks.service.ts
-│       └── tasks.module.ts
-├── config/              # Configuration
-└── common/             # Shared Resources
-```
 
 ## Technology Stack
 - **Framework**: NestJS
@@ -50,7 +36,7 @@ The project follows a modular architecture with clear separation of concerns:
 - **Services**: Implement business logic
 - **Repositories**: Manage data persistence
 - **DTOs**: Define data transfer objects
-- **Entities**: Define database models
+- **Entities**: Define database models with relationships
 - **Mappers**: Handle object transformations
 
 ### Best Practices
@@ -60,27 +46,52 @@ The project follows a modular architecture with clear separation of concerns:
 - Single Responsibility
 - Custom Exception Filters
 - Request Validation
+- Relationship Management
 
 ## API Endpoints
 
 ### Tasks Resource
 ```typescript
-GET    /api/tasks     - Retrieve all tasks
-GET    /api/tasks/:id - Retrieve a specific task
-POST   /api/tasks     - Create a new task
-PATCH  /api/tasks/:id - Update a task
-DELETE /api/tasks/:id - Delete a task
+GET    /api/tasks                 - Retrieve all tasks (with pagination & filters)
+GET    /api/tasks/:id            - Retrieve a specific task with labels
+POST   /api/tasks                - Create a new task
+PATCH  /api/tasks/:id            - Update a task
+DELETE /api/tasks/:id            - Delete a task (cascades to labels)
+```
+
+### Task Labels Resource
+```typescript
+GET    /api/tasks/:id/labels     - Get task labels
+POST   /api/tasks/:id/labels     - Add label to task
+DELETE /api/tasks/:id/labels/:id - Remove label from task
+```
+
+### Query Parameters
+```typescript
+// Pagination
+?page=1&limit=10
+
+// Filtering
+?status=OPEN
+?search=keyword
+?label=important
 ```
 
 ### Request/Response Examples
 
-#### Create Task
+#### Create Task with Labels
 ```json
 POST /api/tasks
 {
   "title": "Complete Project",
   "description": "Finish the NestJS project implementation",
-  "status": "OPEN"
+  "status": "OPEN",
+  "labels": [
+    {
+      "name": "priority",
+      "value": "high"
+    }
+  ]
 }
 ```
 
@@ -91,9 +102,47 @@ POST /api/tasks
   "title": "Complete Project",
   "description": "Finish the NestJS project implementation",
   "status": "OPEN",
-  "createdAt": "2025-01-10T02:01:47+06:00",
-  "updatedAt": "2025-01-10T02:01:47+06:00"
+  "labels": [
+    {
+      "id": 1,
+      "name": "priority",
+      "value": "high"
+    }
+  ],
+  "createdAt": "2025-01-14T20:23:38+06:00",
+  "updatedAt": "2025-01-14T20:23:38+06:00"
 }
+```
+
+## Database Relationships
+```typescript
+// Task -> TaskLabel (One-to-Many)
+@OneToMany(() => TaskLabel, (taskLabel) => taskLabel.task, { 
+  cascade: true 
+})
+labels: TaskLabel[];
+
+// TaskLabel -> Task (Many-to-One)
+@ManyToOne(() => Task, (task) => task.labels)
+task: Task;
+```
+
+## Project Structure
+```
+src/
+├── modules/
+│   └── tasks/
+│       ├── dto/          # Data Transfer Objects
+│       ├── entities/     # Database Entities
+│       │   ├── task.entity.ts
+│       │   └── task.label.entity.ts
+│       ├── exceptions/   # Custom Exceptions
+│       ├── mappers/      # Object Mappers
+│       ├── tasks.controller.ts
+│       ├── tasks.service.ts
+│       └── tasks.module.ts
+├── config/              # Configuration
+└── common/             # Shared Resources
 ```
 
 ## Setup and Installation
