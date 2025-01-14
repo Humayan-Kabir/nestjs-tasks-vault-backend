@@ -2,10 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { TaskStatus } from '../interfaces/task.status';
+import { TaskLabel } from './task.label.entity';
 
 @Entity()
 export class Task {
@@ -32,6 +34,9 @@ export class Task {
     nullable: false,
   })
   status: TaskStatus;
+
+  @OneToMany(() => TaskLabel, (taskLabel) => taskLabel.task, { cascade: true })
+  labels: TaskLabel[];
 
   @CreateDateColumn({
     type: 'timestamp with time zone',
